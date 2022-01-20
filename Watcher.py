@@ -8,9 +8,19 @@ import os
 
 class Watcher:
     def __init__(self, filename):
-        self.monitor = r'/home/estudiante/prueba ransomware/' + filename
-        self.compared = r'/home/estudiante/security backup/prueba ransomware/' + filename
-        self.file = r'C:\Users\migmu\Documents\recuento.txt'
+        path = r'config.txt'
+        with open(path, 'r') as reader:
+            directory = reader.readline().split(':')[1].strip()
+            self.directory=directory.replace("\\", "/")
+            backup = reader.readline().split(':')[1].strip()
+            self.backup = backup.replace("\\", "/")
+            user = reader.readline().split(':')[1].strip()
+        self.monitor = directory + filename
+
+        self.compared = backup + filename
+        self.user = user
+
+
 
     def SameType(self):
         return magic.from_file(self.monitor) == magic.from_file(self.compared) or magic.from_file(self.monitor,
@@ -48,8 +58,8 @@ def main(file_name):
     if dc.ShannonEntropy():
         count += 1
     if count >= 2:
-        os.system('ps -u estudiante > LogProcesos.txt')
-        os.system('fuser -c -k /home/estudiante/"prueba ransomware"')
+        os.system('ps -u '+dc.user+' > LogProcesos.txt')
+        os.system('fuser -c -k '+ dc.directory)
 
 
 if __name__ == '__main__':

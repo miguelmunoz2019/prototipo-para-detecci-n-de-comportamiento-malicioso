@@ -1,1 +1,3 @@
-directory:/home/
+directory:/home/estudiante/"prueba ransomware"
+backup:/home/estudiante/"security backup"/"prueba ransomware"
+user:estudiante
